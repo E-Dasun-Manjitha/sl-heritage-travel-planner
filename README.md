@@ -13,10 +13,10 @@ The application uses a custom multi-agent orchestration pattern where agents exc
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as User Interface (Streamlit)
-    participant A1 as Agent 1: RAG Specialist (Llama 3.1)
-    database DB as Vector Database (ChromaDB)
-    participant A2 as Agent 2: Itinerary Architect (Claude 3.5)
+    actor User as "User Interface (Streamlit)"
+    participant A1 as "Agent 1: RAG Specialist (Llama 3.1)"
+    participant DB as "Vector Database (ChromaDB)"
+    participant A2 as "Agent 2: Itinerary Architect (GPT-4o-mini)"
 
     User->>A1: Request (Interests, Budget, Days)
     activate A1
