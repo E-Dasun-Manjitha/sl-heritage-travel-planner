@@ -93,7 +93,7 @@ st.markdown("""
     <h1 style="margin: 0; padding: 0;">Sri Lanka Tourist & Heritage Route Planner</h1>
 </div>
 """, unsafe_allow_html=True)
-st.markdown("An intelligent, agentic RAG assistant powered by **Llama 3.1 (Groq)** and **Claude 3.5 Sonnet (OpenRouter)** to craft optimized itineraries respecting budget constraints and temple dress codes.")
+st.markdown("An intelligent, agentic RAG assistant powered by **Llama 3.1 (Groq)** and **GPT-4o-mini (OpenRouter)** to craft optimized itineraries respecting budget constraints and temple dress codes.")
 
 # 3. Sidebar inputs
 st.sidebar.markdown("""
@@ -119,7 +119,7 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("""
 **Agent Architecture:**
 - **Agent 1 (Groq / Llama 3.1):** RAG Fact Extractor
-- **Agent 2 (OpenRouter / Claude):** Itinerary Architect (with budget self-reflection loop)
+- **Agent 2 (OpenRouter / GPT-4o-mini):** Itinerary Architect (with budget self-reflection loop)
 """)
 
 # 4. API Key Check warnings

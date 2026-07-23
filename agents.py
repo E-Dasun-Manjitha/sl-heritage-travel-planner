@@ -30,7 +30,7 @@ def get_reasoning_architect_llm():
     if not openrouter_key:
         raise ValueError("OPENROUTER_API_KEY is not configured! Please set it in .streamlit/secrets.toml.")
     return ChatOpenAI(
-        model="anthropic/claude-3.5-sonnet",
+        model="openai/gpt-4o-mini",
         openai_api_base="https://openrouter.ai/api/v1",
         openai_api_key=openrouter_key,
         temperature=0.4

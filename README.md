@@ -40,7 +40,7 @@ sequenceDiagram
 | Sub-task | Selected Model & Provider | Justification |
 | :--- | :--- | :--- |
 | **Intent Routing & Context Extraction** | `llama-3.1-8b-instant` (via Groq) | Extremely low latency, near-zero cost, highly efficient for parsing user queries and extracting facts/JSON structures. |
-| **Itinerary Synthesis & Budget Check** | `claude-3.5-sonnet` (via OpenRouter) | Superior reasoning, spatial awareness of Sri Lankan geography, strict compliance with complex layout constraints, and self-reflection logic. |
+| **Itinerary Synthesis & Budget Check** | `gpt-4o-mini` (via OpenRouter) | High reasoning quality, reliable compliance with budget constraints and complex formatting, accessible on openrouter free tier. |
 
 ---
 
@@ -70,7 +70,7 @@ The ingestion pipeline chunks 30 documents using a `RecursiveCharacterTextSplitt
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/sl-heritage-travel-planner.git
+   git clone https://github.com/E-Dasun-Manjitha/sl-heritage-travel-planner.git
    cd sl-heritage-travel-planner
    ```
 
