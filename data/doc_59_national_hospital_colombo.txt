@@ -1,4 +1,0 @@
-Facility: National Hospital of Sri Lanka (Colombo)
-Type: Public Tertiary General Hospital & National Trauma Center
-Emergency Hotline: 1959 | Landline: +94 11 269 1111
-Details: 24/7 emergency accident service and intensive care units.
