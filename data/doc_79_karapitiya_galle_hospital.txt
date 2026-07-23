@@ -1,0 +1,4 @@
+Facility: Karapitiya Teaching Hospital (Galle)
+Type: Main Government Tertiary Hospital in Southern Province
+Landline: +94 91 223 2261
+Details: Serves emergency cases across Hikkaduwa, Galle, Unawatuna, Mirissa, and Matara coastal zones.

@@ -1,0 +1,4 @@
+App Availability: PickMe & Uber App Coverage
+Active Coverage Zones: Colombo Metro, Negombo, Kandy City, Galle, Matara, and Kurunegala.
+Supported Classes: Metered Tuk-Tuks, Flex Cars, Sedans, and Vans.
+Note: Limited or unavailable in remote areas (Ella, Sigiriya, Arugam Bay, Yala), where local tuk-tuks or private drivers are required.

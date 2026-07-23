@@ -45,19 +45,20 @@ if os.path.exists("./chroma_db"):
 else:
     vector_db = None
 
-def agent_1_logistics_specialist(user_interests, user_days):
+def agent_1_logistics_specialist(user_interests, user_days, accommodation_tier="Mid-Range"):
     """
     Agent 1 (Tool-Use & Router Pattern):
-    Queries the vector DB, extracts factual context, and structures regional logistics and pricing.
+    Queries the vector DB for attractions, accommodation, adventure packages, emergency hotlines, and transport.
+    Structures a comprehensive logistics JSON payload for Agent 2.
     """
     if vector_db is None:
         return json.dumps({"error": "Vector database not found. Please run rag_builder.py first."}), []
         
-    # Construct search query based on user options (Router Pattern)
-    query = f"Attractions, entry ticket costs, dress codes, and transport for {user_interests} in {user_days} days"
+    # Construct targeted search query combining interests, accommodation tier, and essential rules (Router Pattern)
+    query = f"Attractions, entry ticket fees, {accommodation_tier} accommodation, transport apps, emergency hotlines, Hela Bojun dining, permits, and dress codes for {user_interests} in {user_days} days"
     
-    # Retrieve top 5 matching document chunks (Tool-Use Pattern)
-    retrieved_docs = vector_db.similarity_search(query, k=5)
+    # Retrieve top 10 matching document chunks across the 100-document knowledge base (Tool-Use Pattern)
+    retrieved_docs = vector_db.similarity_search(query, k=10)
     context_text = "\n\n".join([f"Source {i+1} ({doc.metadata.get('source', 'Unknown')}):\n{doc.page_content}" for i, doc in enumerate(retrieved_docs)])
     
     prompt = f"""
@@ -70,22 +71,35 @@ def agent_1_logistics_specialist(user_interests, user_days):
     User Parameters:
     - Interests: {user_interests}
     - Days: {user_days}
+    - Preferred Accommodation Tier: {accommodation_tier}
     
     Instructions:
     Extract facts strictly from the context above. Group them by:
-    1. attractions (name, entrance fee in LKR or USD, and mandatory dress code rules)
-    2. transport_choices (types, estimated costs in LKR, and booking requirements)
-    3. general_rules (temple etiquettes, monsoons, clothing guides)
+    1. attractions (name, entrance fee in LKR or USD, dress code or permit rules)
+    2. accommodation_options (category, price range, recommended places)
+    3. transport_and_apps (ride-hailing coverage, expressways, driving permits)
+    4. emergency_and_police_hotlines (tourist police 1912, ambulance 1990, disaster 117, hospitals)
+    5. dining_and_hela_bojun (Hela Bojun outlets, local food price ranges)
+    6. permits_and_safety_rules (temple etiquettes, DWC online permits, drone rules)
     
     You MUST respond ONLY with a valid JSON block containing:
     {{
       "attractions": [
-        {{"name": "...", "fee": "...", "dress_code": "..."}}
+        {{"name": "...", "fee": "...", "rules": "..."}}
       ],
-      "transport_choices": [
-        {{"type": "...", "cost_estimate": "...", "booking_tips": "..."}}
+      "accommodation_options": [
+        {{"tier": "...", "location": "...", "price_range": "...", "options": "..."}}
       ],
-      "cultural_and_safety_rules": ["..."]
+      "transport_and_apps": [
+        {{"service": "...", "details": "..."}}
+      ],
+      "emergency_and_police_hotlines": [
+        {{"facility": "...", "contact": "...", "role": "..."}}
+      ],
+      "dining_and_hela_bojun": [
+        {{"outlet": "...", "details": "..."}}
+      ],
+      "permits_and_safety_rules": ["..."]
     }}
     Do not add any conversational text before or after the JSON.
     """
@@ -103,11 +117,12 @@ def agent_1_logistics_specialist(user_interests, user_days):
     
     return content, retrieved_docs
 
-def agent_2_itinerary_architect(extracted_logistics_json, user_budget, user_days):
+def agent_2_itinerary_architect(extracted_logistics_json, user_budget, user_days, accommodation_tier="Mid-Range"):
     """
     Agent 2 (Reflection & Orchestrator Pattern):
     Receives structured output from Agent 1 and builds a day-by-day plan adhering to constraints.
-    Performs a reflection loop checking the budget.
+    Performs a reflection loop checking the total budget (fees + accommodation + transport).
+    Appends full guidelines (emergency hotlines, transport hacks, dining, and permits).
     """
     # Parse the logistics payload (Agent-to-Agent communication)
     try:
@@ -117,27 +132,35 @@ def agent_2_itinerary_architect(extracted_logistics_json, user_budget, user_days
         
     prompt = f"""
     You are Agent 2 (Itinerary Architect).
-    You will create a custom {user_days}-Day Travel Itinerary for Sri Lanka.
+    You will create a comprehensive, high-value {user_days}-Day Travel Itinerary & Guidelines for Sri Lanka.
     
     Logistics Data payload from Agent 1:
     {json.dumps(logistics_data, indent=2)}
     
-    Constraints:
+    User Constraints:
     - Duration: {user_days} Days
     - Max Budget limit: {user_budget} LKR
+    - Preferred Accommodation Tier: {accommodation_tier}
     
     Instructions:
-    1. **Drafting Step**: Build a day-by-day schedule (Morning, Afternoon, Evening) matching the user's interests.
-    2. **Self-Reflection & Budget Verification**:
-       - Sum up all mandatory entrance fees and transport costs mentioned in the itinerary.
+    1. **Self-Reflection & Budget Verification**:
+       - Calculate estimated entrance fees + accommodation ({accommodation_tier}) + transport.
        - Verify if the total fits strictly within {user_budget} LKR.
-       - If it exceeds, adjust: swap out expensive destinations (e.g., Sigiriya @ $35 USD or park safari jeeps @ 15,000 LKR) with free/affordable alternatives (e.g., Galle Fort, beaches, or hiking Little Adam's Peak which are free).
-    3. **Output Format**:
-       Create a beautiful markdown itinerary. Begin with a "Budget Analysis & Verification Report" containing:
-       - Total estimated cost (Fees + Transport)
-       - Verification status (Passed / Adjusted to fit budget)
-       - If adjusted, list what expensive options were removed/swapped.
-       Then output the Day-by-Day plan with clean formatting, emoji indicators, and tips.
+       - If it exceeds, adjust: swap out expensive destinations or luxury stays with affordable options (e.g. Galle Fort, beaches, free hikes like Little Adam's Peak, Hela Bojun meals).
+    
+    2. **Day-by-Day Detailed Itinerary**:
+       - Morning, Afternoon, Evening breakdown for each day.
+       - Recommend specific accommodations for each night matching the user's tier ({accommodation_tier}).
+    
+    3. **Essential Guidelines & Practical Traveler Guide**:
+       Include dedicated sections for:
+       - 🚨 **Emergency Hotlines & Safety**: Tourist Police (1912), 1990 Suwa Seriya Ambulance, Disaster Management (117), Regional Hospitals.
+       - 🚗 **Transport & App Hacks**: PickMe/Uber coverage zones, Makumbura Highway Expressways, AAC Driving Permit rules for self-drive.
+       - 🥗 **Authentic Dining & Hela Bojun Outlets**: Recommended Hela Bojun Hala outlets for healthy, budget vegetarian meals.
+       - 📜 **Permits & Etiquette Guidelines**: DWC online permit portal (`dwc.lankagate.gov.lk`), temple dress codes, drone authorization rules.
+    
+    Output Format:
+    Return clean, beautiful Markdown with clear headings, bullet points, and emojis.
     """
     
     reasoning_llm = get_reasoning_architect_llm()

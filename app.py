@@ -107,19 +107,34 @@ st.sidebar.header("📋 Configure Parameters")
 
 days = st.sidebar.slider("Trip Duration (Days)", min_value=1, max_value=7, value=3)
 
-budget = st.sidebar.number_input("Total Budget (LKR)", min_value=10000, max_value=1000000, value=120000, step=5000, help="Specify total budget including transportation and tickets.")
+budget = st.sidebar.number_input("Total Budget (LKR)", min_value=10000, max_value=2000000, value=120000, step=5000, help="Specify total budget including accommodation, transportation, and entry tickets.")
+
+accommodation_tier = st.sidebar.selectbox(
+    "Select Accommodation Preference",
+    ["Budget (Hostels & Homestays)", "Mid-Range (Villas & Eco Resorts)", "Luxury (5-Star & Plantation Estates)"],
+    index=1
+)
 
 interests = st.sidebar.multiselect(
     "Select Travel Preferences",
-    ["Culture & Heritage", "Nature & Wildlife", "Beaches & Surfing", "Food & Tea"],
+    [
+        "Culture & Heritage",
+        "Nature & Wildlife",
+        "Beaches & Surfing",
+        "Food & Tea",
+        "Adventure & Hiking",
+        "Luxury & Wellness Retreats",
+        "Budget & Backpacking",
+        "Emergency & Safety Guidelines"
+    ],
     default=["Culture & Heritage", "Nature & Wildlife"]
 )
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
 **Agent Architecture:**
-- **Agent 1 (Groq / Llama 3.1):** RAG Fact Extractor
-- **Agent 2 (OpenRouter / GPT-4o-mini):** Itinerary Architect (with budget self-reflection loop)
+- **Agent 1 (Groq / Llama 3.1):** RAG Fact Extractor (Queries 100-Doc Vector Store)
+- **Agent 2 (OpenRouter / GPT-4o-mini):** Itinerary Architect (with budget self-reflection & safety guidelines)
 """)
 
 # 4. API Key Check warnings
@@ -153,10 +168,10 @@ if st.sidebar.button("🚀 Generate Itinerary"):
             
             # Create progress bars and spinners
             with st.spinner("🤖 Agent 1: Retrieving tourist database facts (ChromaDB) and compiling logistics..."):
-                extracted_facts, retrieved_docs = agent_1_logistics_specialist(selected_interests_str, days)
+                extracted_facts, retrieved_docs = agent_1_logistics_specialist(selected_interests_str, days, accommodation_tier)
             
             with st.spinner("🧠 Agent 2: Synthesizing day-by-day planner and validating budget limits..."):
-                final_itinerary = agent_2_itinerary_architect(extracted_facts, budget, days)
+                final_itinerary = agent_2_itinerary_architect(extracted_facts, budget, days, accommodation_tier)
                 
             st.success("✨ Your Sri Lankan travel plan has been compiled!")
             

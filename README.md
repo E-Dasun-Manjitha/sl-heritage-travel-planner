@@ -54,15 +54,15 @@ sequenceDiagram
 
 ## 🧪 RAG Retrieval Quality Evaluation
 
-The ingestion pipeline chunks 30 documents using a `RecursiveCharacterTextSplitter` (600 characters size, 100 overlap) and caches vectors using open-source `sentence-transformers/all-MiniLM-L6-v2`.
+The ingestion pipeline chunks 100 comprehensive domain documents (covering UNESCO heritage sites, accommodation tiers, adventure packages, tourist police & emergency hotlines, transport apps, Hela Bojun dining, botanical gardens, and forest/wildlife permits) using a `RecursiveCharacterTextSplitter` (600 characters size, 100 overlap) and caches vectors using open-source `sentence-transformers/all-MiniLM-L6-v2`.
 
 | Sample Query | Retrieved Context Relevant? | Commentary |
 | :--- | :--- | :--- |
 | *What is the entrance fee for Sigiriya?* | ✅ Yes | Correctly fetched $35 USD (~11,300 LKR) from `doc_01_sigiriya.txt`. |
-| *What time does the train leave Kandy for Ella?* | ✅ Yes | Retrieved train booking costs (1st class reserved 3000-5000 LKR) from `doc_09_train_kandy_ella.txt`. |
-| *What should I wear at Buddhist temples?* | ✅ Yes | Extracted rules requiring covering shoulders/knees and removing footwear from `doc_13_temple_dress_code.txt`. |
-| *How much is a safari at Yala?* | ✅ Yes | Retrieved $30-$40 USD entry plus 12,000-18,000 LKR jeep rental from `doc_07_yala_national_park.txt`. |
-| *What food costs should I expect in Sri Lanka?* | ✅ Yes | Extracted typical local breakfast (200-400 LKR) and kottu roti (600-1,200 LKR) from `doc_23_sri_lankan_food_costs.txt`. |
+| *What is the Tourist Police hotline number?* | ✅ Yes | Retrieved 24/7 hotline 1912 & emergency 119 from `doc_56_tourist_police_hotlines.txt`. |
+| *Where can I find budget hostels in Kandy & Colombo?* | ✅ Yes | Retrieved LKR 2,500-6,000 dorm options from `doc_31_budget_hostels_colombo_kandy.txt`. |
+| *How much is white water rafting in Kitulgala?* | ✅ Yes | Extracted $35-$65 USD rafting package details from `doc_47_kitulgala_whitewater_rafting.txt`. |
+| *What is Hela Bojun Hala and where are outlets located?* | ✅ Yes | Extracted female entrepreneur vegetarian outlets & menu items from `doc_66_hela_bojun_outlets.txt`. |
 
 ---
 

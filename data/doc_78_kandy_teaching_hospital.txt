@@ -1,0 +1,4 @@
+Facility: National Hospital Kandy (Teaching Hospital)
+Type: Major Public Hospital in Central Province
+Landline: +94 81 222 2261
+Details: Primary trauma center for emergencies occurring in Kandy, Sigiriya, Dambulla, Matale, and Knuckles Mountain Range.

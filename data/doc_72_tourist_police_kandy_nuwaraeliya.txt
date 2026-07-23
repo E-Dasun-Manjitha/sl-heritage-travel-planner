@@ -1,0 +1,4 @@
+Facility: Hill Country Tourist Police Units
+Kandy Tourist Police Unit: Kandy Police Station premises | Tel: +94 81 222 2222
+Nuwara Eliya Tourist Police Unit: Central Bus Stand Premises | Tel: +94 52 222 2222
+Role: Assists travelers in Kandy, Ella, and Nuwara Eliya with local safety, guide verification, and mountain emergency response.
