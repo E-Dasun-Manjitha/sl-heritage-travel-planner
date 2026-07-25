@@ -1,4 +1,5 @@
 import os
+os.environ["HF_HUB_OFFLINE"] = "1"
 import json
 # pyrefly: ignore [missing-import]
 import streamlit as st
@@ -19,12 +20,22 @@ if not openrouter_key or openrouter_key == "your_actual_openrouter_api_key_here"
 
 # 2. Model Initialization (Deliberate Model Strategy)
 def get_fast_router_llm():
-    if not groq_key:
-        raise ValueError("GROQ_API_KEY is not configured! Please set it in .streamlit/secrets.toml.")
-    return ChatGroq(
-        model_name="llama-3.1-8b-instant",
-        groq_api_key=groq_key,
-        temperature=0.2
+    if groq_key and groq_key != "your_actual_groq_api_key_here":
+        try:
+            return ChatGroq(
+                model_name="llama-3.1-8b-instant",
+                groq_api_key=groq_key,
+                temperature=0.2,
+                max_retries=2
+            )
+        except Exception:
+            pass
+    return ChatOpenAI(
+        model_name="openai/gpt-4o-mini",
+        openai_api_base="https://openrouter.ai/api/v1",
+        openai_api_key=openrouter_key,
+        temperature=0.2,
+        max_retries=3
     )
 
 def get_reasoning_architect_llm():
@@ -40,7 +51,16 @@ def get_reasoning_architect_llm():
 # 3. Vector Database Connection
 # Check if chroma_db exists first
 if os.path.exists("./chroma_db"):
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    def _init_embeddings():
+        for attempt in range(4):
+            try:
+                return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+            except Exception as e:
+                import time
+                time.sleep(1.5)
+        return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    
+    embeddings = _init_embeddings()
     vector_db = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
 else:
     vector_db = None
@@ -104,9 +124,15 @@ def agent_1_logistics_specialist(user_interests, user_days, accommodation_tier="
     Do not add any conversational text before or after the JSON.
     """
     
-    fast_llm = get_fast_router_llm()
-    response = fast_llm.invoke(prompt)
-    
+    # Primary: Fast Groq Llama 3.1 -> Fallback: OpenRouter GPT-4o-mini
+    try:
+        fast_llm = ChatGroq(model_name="llama-3.1-8b-instant", groq_api_key=groq_key, temperature=0.2, request_timeout=15.0)
+        response = fast_llm.invoke(prompt)
+    except Exception as e:
+        print(f"Groq API connection timeout, switching to OpenRouter fallback: {e}")
+        fast_llm = ChatOpenAI(model_name="openai/gpt-4o-mini", openai_api_base="https://openrouter.ai/api/v1", openai_api_key=openrouter_key, temperature=0.2)
+        response = fast_llm.invoke(prompt)
+            
     # Extract JSON content if the model outputs code blocks
     content = response.content.strip()
     if content.startswith("```json"):
@@ -193,6 +219,16 @@ def agent_2_itinerary_architect(extracted_logistics_json, user_budget, user_days
     """
     
     reasoning_llm = get_reasoning_architect_llm()
-    response = reasoning_llm.invoke(prompt)
+    response = None
+    for attempt in range(4):
+        try:
+            response = reasoning_llm.invoke(prompt)
+            break
+        except Exception as e:
+            if attempt == 3:
+                raise e
+            import time
+            time.sleep(2)
+            
     return response.content
 
