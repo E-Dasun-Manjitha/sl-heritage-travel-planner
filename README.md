@@ -104,3 +104,21 @@ The ingestion pipeline chunks 100 comprehensive domain documents (covering UNESC
    ```bash
    streamlit run app.py
    ```
+
+---
+
+## 🗺️ Interactive Topographic Map Features
+
+- **StepMap Topographic Visualization:** CartoDB Voyager vector terrain basemap centered tightly on Sri Lanka (`zoom=7.9`).
+- **Red Directional Path Arrows:** Dynamically computes segment headings and displays directional red arrows (`▲`) along the travel path.
+- **Red Destination Pins:** Sequence-numbered circular red destination pins (`①`, `②`, `③`...) with white callout badges.
+- **Google Maps Route Link:** One-click link to open the multi-stop route directions on mobile or desktop devices.
+
+---
+
+## ⚠️ Known Limitations & Future Work
+
+1. **Static Location Coordinates:** Location coordinates map major tourist hubs (Sigiriya, Dambulla, Kandy, Nuwara Eliya, Ella, Yala, Galle, Bentota, Colombo); newly added remote villages fallback to nearest regional hub.
+2. **Third-Party Rate Limits:** Dependent on Groq API and OpenRouter API availability and rate limits.
+3. **Seasonal Monsoon Weather:** Weather recommendations are rule-based via the RAG database context; future versions could integrate live OpenWeatherMap API feeds.
+

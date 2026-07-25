@@ -1,0 +1,4 @@
+Facility: Disaster Management Centre & Department of Meteorology
+Disaster Call Centre Hotline: 117
+Emergency DMC Landline: +94 11 213 6222
+Use Case: Essential for landslide alerts, flood warnings, or weather updates before embarking on high-altitude hikes.

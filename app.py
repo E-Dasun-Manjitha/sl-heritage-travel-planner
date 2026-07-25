@@ -1,6 +1,124 @@
 import os
+import json
+import math
+import pandas as pd
+import pydeck as pdk
 import streamlit as st
 from agents import agent_1_logistics_specialist, agent_2_itinerary_architect
+
+# Location Coordinate Database for Sri Lanka Destinations
+SRI_LANKA_COORDINATES = {
+    "sigiriya": {"lat": 7.9570, "lon": 80.7603, "name": "Sigiriya", "type": "Heritage Site"},
+    "dambulla": {"lat": 7.8742, "lon": 80.6511, "name": "Dambulla", "type": "Sacred Temple"},
+    "polonnaruwa": {"lat": 7.9403, "lon": 81.0188, "name": "Polonnaruwa", "type": "Archaeological Park"},
+    "anuradhapura": {"lat": 8.3114, "lon": 80.4037, "name": "Anuradhapura", "type": "Ancient Stupas"},
+    "kandy": {"lat": 7.2906, "lon": 80.6337, "name": "Kandy", "type": "Sacred Shrine"},
+    "galle": {"lat": 6.0535, "lon": 80.2210, "name": "Galle", "type": "Living Heritage"},
+    "yala": {"lat": 6.3725, "lon": 81.5165, "name": "Yala", "type": "Wildlife Safari"},
+    "sinharaja": {"lat": 6.4167, "lon": 80.4167, "name": "Sinharaja", "type": "UNESCO Rainforest"},
+    "ella": {"lat": 6.8667, "lon": 81.0466, "name": "Ella", "type": "Scenic Hiking"},
+    "mirissa": {"lat": 5.9483, "lon": 80.4716, "name": "Mirissa", "type": "Beach & Wildlife"},
+    "hikkaduwa": {"lat": 6.1394, "lon": 80.1063, "name": "Hikkaduwa", "type": "Marine Sanctuary"},
+    "colombo": {"lat": 6.9271, "lon": 79.8612, "name": "Colombo ✈️", "type": "Capital & Airport"},
+    "horton plains": {"lat": 6.8028, "lon": 80.8091, "name": "Horton Plains", "type": "National Park"},
+    "nuwara eliya": {"lat": 6.9497, "lon": 80.7891, "name": "Nuwara Eliya", "type": "Hill Country"},
+    "adam's peak": {"lat": 6.8096, "lon": 80.4994, "name": "Adam's Peak", "type": "Pilgrimage Mountain"},
+    "pinnawala": {"lat": 7.3013, "lon": 80.3846, "name": "Pinnawala", "type": "Elephant Sanctuary"},
+    "bentota": {"lat": 6.4225, "lon": 79.9984, "name": "Bentota", "type": "Water Sports"},
+    "jaffna": {"lat": 9.6615, "lon": 80.0255, "name": "Jaffna", "type": "Northern Heritage"},
+    "trincomalee": {"lat": 8.5874, "lon": 81.2152, "name": "Trincomalee", "type": "Marine & Temple"},
+    "arugam bay": {"lat": 6.8415, "lon": 81.8358, "name": "Arugam Bay", "type": "Surfing Bay"},
+    "udawalawe": {"lat": 6.4746, "lon": 80.8987, "name": "Udawalawe", "type": "Elephant Safari"},
+    "kitulgala": {"lat": 6.9904, "lon": 80.4132, "name": "Kitulgala", "type": "Adventure Sports"},
+    "knuckles": {"lat": 7.4475, "lon": 80.7786, "name": "Knuckles", "type": "Mountain Trekking"},
+    "weligama": {"lat": 5.9734, "lon": 80.4287, "name": "Weligama", "type": "Surf School"},
+    "tangalle": {"lat": 6.0244, "lon": 80.7941, "name": "Tangalle", "type": "Ocean Resort"},
+    "negombo": {"lat": 7.2008, "lon": 79.8737, "name": "Negombo", "type": "Beach & Lagoon"},
+    "tissa": {"lat": 6.2842, "lon": 81.2847, "name": "Tissa", "type": "Safari Base"},
+    "tissamaharama": {"lat": 6.2842, "lon": 81.2847, "name": "Tissa", "type": "Safari Base"},
+    "hatton": {"lat": 6.8916, "lon": 80.5956, "name": "Hatton", "type": "Tea Estate"}
+}
+
+def extract_locations_dataframe(itinerary_text, logistics_json_str):
+    """
+    Parses the generated itinerary text and logistics payload to extract locations
+    in exact chronological travel sequence from Day 1 to Day N.
+    """
+    locations_list = []
+    seen_names = set()
+    
+    # Scan text prioritizing itinerary_text for chronological day-by-day order
+    text_to_scan = (itinerary_text or "") + "\n" + (logistics_json_str or "")
+    text_lower = text_to_scan.lower()
+    
+    # Find positions of all matched locations in the itinerary text
+    found_matches = []
+    for key, coord in SRI_LANKA_COORDINATES.items():
+        pos = text_lower.find(key)
+        if pos != -1:
+            found_matches.append((pos, key, coord))
+            
+    # Sort locations by their appearance order in the itinerary text to preserve Day 1 -> Day N sequence
+    found_matches.sort(key=lambda x: x[0])
+    
+    for pos, key, coord in found_matches:
+        if coord["name"] not in seen_names:
+            seen_names.add(coord["name"])
+            locations_list.append({
+                "name": coord["name"],
+                "lat": coord["lat"],
+                "lon": coord["lon"],
+                "type": coord["type"],
+                "details": f"Suggested Stop along Day-by-Day Route"
+            })
+            
+    # Fallback default loop if empty
+    if not locations_list:
+        locations_list = [
+            {"name": "Colombo ✈️", "lat": 6.9271, "lon": 79.8612, "type": "Gateway", "details": "Capital City & Airport"},
+            {"name": "Dambulla", "lat": 7.8742, "lon": 80.6511, "type": "Sacred Temple", "details": "Cave Temple"},
+            {"name": "Sigiriya", "lat": 7.9570, "lon": 80.7603, "type": "Ancient Rock", "details": "Lion Rock Fortress"},
+            {"name": "Kandy", "lat": 7.2906, "lon": 80.6337, "type": "Heritage", "details": "Temple of Tooth Relic"},
+            {"name": "Nuwara Eliya", "lat": 6.9497, "lon": 80.7891, "type": "Tea Country", "details": "Tea Estate Scenery"},
+            {"name": "Ella", "lat": 6.8667, "lon": 81.0466, "type": "Mountains", "details": "Nine Arch Bridge & Hikes"},
+            {"name": "Yala", "lat": 6.3725, "lon": 81.5165, "type": "Safari", "details": "Leopard Safari Park"},
+            {"name": "Galle", "lat": 6.0535, "lon": 80.2210, "type": "Living Fort", "details": "Dutch Ramparts"},
+            {"name": "Bentota", "lat": 6.4225, "lon": 79.9984, "type": "Beach", "details": "Golden Sands"}
+        ]
+        
+    # Add sequence numbers and map labels
+    circled_nums = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫", "⑬", "⑭", "⑮"]
+    for idx, item in enumerate(locations_list):
+        num_str = circled_nums[idx] if idx < len(circled_nums) else f"({idx+1})"
+        item["stop_number"] = idx + 1
+        item["map_label"] = f"{num_str} {item['name']}"
+        
+    df = pd.DataFrame(locations_list)
+    return df
+
+def compute_route_arrows(df):
+    """Computes midpoint coordinates and bearing angle for directional red arrows along the route."""
+    arrows = []
+    for i in range(len(df) - 1):
+        p1 = df.iloc[i]
+        p2 = df.iloc[i+1]
+        
+        # Position arrow at 55% along the leg
+        mid_lat = p1['lat'] * 0.45 + p2['lat'] * 0.55
+        mid_lon = p1['lon'] * 0.45 + p2['lon'] * 0.55
+        
+        # Bearing calculation in spherical coordinates
+        d_lon = (p2['lon'] - p1['lon']) * math.cos(math.radians((p1['lat'] + p2['lat'])/2))
+        d_lat = p2['lat'] - p1['lat']
+        angle = math.degrees(math.atan2(d_lon, d_lat))
+        
+        arrows.append({
+            "lat": mid_lat,
+            "lon": mid_lon,
+            "angle": -angle,  # PyDeck rotation
+            "symbol": "▲"
+        })
+    return pd.DataFrame(arrows)
 
 # 1. Page Configuration & Theme
 st.set_page_config(
@@ -72,6 +190,28 @@ st.markdown("""
     .stTabs [aria-selected="true"] {
         color: #FF9900 !important;
         border-bottom-color: #FF9900 !important;
+    }
+    
+    /* Table styling for financial & summary tables */
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin: 15px 0 !important;
+    }
+    th {
+        background-color: #f1f5f9 !important;
+        color: #1e293b !important;
+        font-weight: 700 !important;
+        padding: 10px 14px !important;
+        border: 1px solid #cbd5e1 !important;
+        text-align: left !important;
+    }
+    td {
+        padding: 10px 14px !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+    tr:nth-child(even) {
+        background-color: #f8fafc !important;
     }
     
     /* Card Container */
@@ -175,13 +315,117 @@ if st.sidebar.button("🚀 Generate Itinerary"):
                 
             st.success("✨ Your Sri Lankan travel plan has been compiled!")
             
+            # Extract DataFrame of places in chronological travel order
+            map_df = extract_locations_dataframe(final_itinerary, extracted_facts)
+            
             # Setup Tabs for display
-            tab1, tab2 = st.tabs(["🗺️ Day-by-Day Itinerary", "🔍 RAG Verification & Source Chunks"])
+            tab1, tab2, tab3 = st.tabs(["🗺️ Day-by-Day Itinerary", "📍 Interactive Route Map", "🔍 RAG Verification & Source Chunks"])
             
             with tab1:
                 st.markdown(final_itinerary)
                 
             with tab2:
+                st.subheader("📍 Sri Lanka Tourist Route & Destination Map")
+                st.markdown(f"Topographic travel route map highlighting **{len(map_df)} destination stops** and travel directions across Sri Lanka:")
+                
+                # Compute directional arrows DataFrame
+                arrows_df = compute_route_arrows(map_df)
+                
+                # Render PyDeck Interactive Map with CartoDB Voyager Topographic Style (Focused tightly on Sri Lanka)
+                center_lat = float(map_df["lat"].mean()) if not map_df.empty else 7.75
+                center_lon = float(map_df["lon"].mean()) if not map_df.empty else 80.70
+                
+                view_state = pdk.ViewState(
+                    latitude=center_lat,
+                    longitude=center_lon,
+                    zoom=7.9,
+                    pitch=0
+                )
+                
+                # Red path line connecting destination stops
+                path_data = [{"path": map_df[["lon", "lat"]].values.tolist()}]
+                path_layer = pdk.Layer(
+                    "PathLayer",
+                    path_data,
+                    get_path="path",
+                    get_color="[220, 38, 38, 240]",
+                    width_scale=20,
+                    width_min_pixels=3,
+                    pickable=False
+                )
+                
+                # Directional red arrow markers along the route path
+                arrows_layer = pdk.Layer(
+                    "TextLayer",
+                    arrows_df,
+                    get_position=["lon", "lat"],
+                    get_text="symbol",
+                    get_angle="angle",
+                    get_size=18,
+                    get_color="[220, 38, 38, 255]",
+                    get_text_anchor="'middle'",
+                    get_alignment_baseline="'center'"
+                )
+                
+                # Red circular destination pins with dark red borders (matching StepMap style)
+                scatter_layer = pdk.Layer(
+                    "ScatterplotLayer",
+                    map_df,
+                    get_position=["lon", "lat"],
+                    get_fill_color="[220, 38, 38, 255]",
+                    get_line_color="[153, 27, 27, 255]",
+                    line_width_min_pixels=2,
+                    get_radius=8500,
+                    pickable=True,
+                    auto_highlight=True
+                )
+                
+                # Clean place text labels next to each destination pin
+                text_layer = pdk.Layer(
+                    "TextLayer",
+                    map_df,
+                    get_position=["lon", "lat"],
+                    get_text="map_label",
+                    get_size=15,
+                    get_color="[15, 23, 42, 255]",
+                    get_background_color="[255, 255, 255, 220]",
+                    get_border_color="[220, 38, 38, 200]",
+                    get_border_width=1,
+                    padding=[3, 6],
+                    get_text_anchor="'left'",
+                    get_alignment_baseline="'center'"
+                )
+                
+                deck = pdk.Deck(
+                    layers=[path_layer, arrows_layer, scatter_layer, text_layer],
+                    initial_view_state=view_state,
+                    map_style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+                    tooltip={"text": "📍 Stop #{stop_number}: {name}\nCategory: {type}\n{details}"}
+                )
+                
+                st.pydeck_chart(deck)
+                
+                st.markdown("---")
+                st.markdown("### 📋 Suggested Destination Summary")
+                st.dataframe(
+                    map_df[["stop_number", "name", "type", "lat", "lon", "details"]],
+                    column_config={
+                        "stop_number": "Stop #",
+                        "name": "Destination Name",
+                        "type": "Category",
+                        "lat": "Latitude",
+                        "lon": "Longitude",
+                        "details": "Details & Fee Notes"
+                    },
+                    use_container_width=True
+                )
+                
+                # Google Maps Route Link
+                gmaps_coords = "/".join([f"{row['lat']},{row['lon']}" for _, row in map_df.iterrows()])
+                gmaps_url = f"https://www.google.com/maps/dir/{gmaps_coords}"
+                st.markdown(f"👉 [**🌐 Open Complete Travel Route in Google Maps**]({gmaps_url})")
+                
+            with tab3:
                 st.subheader("Retrieved Context Chunks (Ground Truth Sources)")
                 st.write(f"The vector database retrieved {len(retrieved_docs)} matching documents to ground the agents' knowledge base:")
                 for idx, doc in enumerate(retrieved_docs):
@@ -194,3 +438,4 @@ if st.sidebar.button("🚀 Generate Itinerary"):
         except Exception as e:
             st.error("An error occurred during generation.")
             st.exception(e)
+

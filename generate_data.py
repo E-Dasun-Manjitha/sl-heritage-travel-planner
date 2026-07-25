@@ -313,7 +313,367 @@ Tips:
 - Health: Drink only bottled or filtered water. Ensure street food is hot and freshly prepared. Carry mosquito repellent to protect against Dengue fever.
 - Scams: Avoid unofficial beach boys or tour guides. Always check prices before ordering food or boarding tuk-tuks. Use metered transport.
 - Connectivity: Buy a tourist SIM card (Dialog or Mobitel) at Colombo Airport. 20-30 GB data costs around 2,000 - 3,000 LKR ($7-$10 USD).
-- Cultural Respect: Never pose for photos touching or climbing sacred monuments or Buddha statues. Avoid wearing clothes with religious symbols."""
+- Cultural Respect: Never pose for photos touching or climbing sacred monuments or Buddha statues. Avoid wearing clothes with religious symbols.""",
+
+        "doc_100_sri_lanka_railways_headquarters.txt": """Authority: Sri Lanka Railways (SLR)
+Headquarters: Olcott Mawatha, Colombo Fort | Hotline: 1971 | Station Office: +94 11 243 4215
+Online Booking Portal: seatreservation.railway.gov.lk
+Service: Information on 30-day seat reservations, special luxury observation cars (Viceroy Special, Ella Odyssey), and train delay status.""",
+
+        "doc_31_budget_hostels_colombo_kandy.txt": """Category: Budget Accommodation (Hostels & Backpacker Lodges)
+Locations: Colombo & Kandy
+Price Range: LKR 2,500 - LKR 6,000 per bed/night
+Popular Options: Clock Inn Colombo, Hosterville Kandy, Backpacker's Nest Kandy.
+Amenities: Shared dorms, free Wi-Fi, air conditioning, communal kitchen, locker storage. Ideal for solo travelers and low-budget itineraries.""",
+
+        "doc_32_budget_guesthouses_ella_nuwaraeliya.txt": """Category: Budget Accommodation (Family Homestays)
+Locations: Ella & Nuwara Eliya
+Price Range: LKR 4,000 - LKR 8,000 per room/night
+Popular Options: Ella Eco Lodges, Mount Wave Homestay Nuwara Eliya.
+Amenities: Includes traditional home-cooked Sri Lankan breakfast. Hosts assist with tuk-tuk arrangements for hikes to Little Adam's Peak and Ella Rock.""",
+
+        "doc_33_budget_beach_cabanas_south.txt": """Category: Budget Beach Cabanas & Surf Hostels
+Locations: Mirissa, Weligama, Arugam Bay
+Price Range: LKR 3,500 - LKR 7,500 per night
+Popular Spots: Hangtime Hostel Weligama, Sea Turtle Cabanas Mirissa.
+Amenities: Beachfront access, surf board rentals (LKR 1,000/hr), open-air dining, and social atmosphere for backpackers.""",
+
+        "doc_34_heritage_villas_galle_fort.txt": """Category: Mid-Range Heritage Villas
+Location: Galle Dutch Fort
+Price Range: LKR 20,000 - LKR 35,000 per room/night
+Popular Options: Taru Villas Rampart Street, Fort Bazaar, Prince of Galle.
+Details: Restored Dutch colonial merchant houses within the UNESCO ramparts. Includes air conditioning, courtyard gardens, and full breakfast.""",
+
+        "doc_35_tea_bungalows_hill_country.txt": """Category: Plantation Bungalows & Tea Estate Lodges
+Locations: Hatton, Nuwara Eliya, Bandarawela
+Price Range: LKR 25,000 - LKR 45,000 per night
+Popular Options: Stafford Bungalow Nuwara Eliya, Camellia Hills Hatton.
+Details: Historic British tea planter bungalows surrounded by tea estates. Features fireplace lounges, high tea, and guided tea walks.""",
+
+        "doc_36_midrange_resorts_cultural_triangle.txt": """Category: Mid-Range Eco Resorts
+Locations: Sigiriya & Dambulla
+Price Range: LKR 15,000 - LKR 30,000 per night
+Popular Options: Sigiriya Village Hotel, Aliya Resort & Spa.
+Details: Eco-friendly chalets with direct views of Sigiriya Rock Fortress. Includes swimming pools, buffet breakfasts, and bicycle rentals.""",
+
+        "doc_37_eco_lodges_knuckles_kitulgala.txt": """Category: Rainforest Eco-Lodges & Nature Retreats
+Locations: Knuckles Mountain Range & Kitulgala
+Price Range: LKR 12,000 - LKR 22,000 per night
+Popular Options: Rukgala Retreat, Kitulgala Adventure Camp.
+Details: Secluded nature lodges near rivers and forests. Designed for trekking, yoga, and whitewater rafting participants.""",
+
+        "doc_38_beach_resorts_bentota_tangalle.txt": """Category: Beachfront Resorts & Villas
+Locations: Bentota & Tangalle
+Price Range: LKR 18,000 - LKR 35,000 per night
+Popular Options: Cinnamon Bey Beruwala, Maya Tangalle Villa.
+Details: Direct ocean access, infinity pools, Ayurvedic spa centers, and seafood dining on the beach.""",
+
+        "doc_39_luxury_tea_trails.txt": """Category: Luxury Tea Plantation Estates
+Location: Ceylon Tea Trails (Hatton)
+Price Range: USD 600 - USD 1,100 per night (All-Inclusive)
+Details: Relais & Châteaux property featuring restored tea planter bungalows. Includes private butler service, gourmet dining, and guided estate walks.""",
+
+        "doc_40_luxury_safari_camps_yala.txt": """Category: Luxury Tented Safari Camps
+Location: Yala National Park Border
+Price Range: USD 450 - USD 900 per night (All-Inclusive)
+Popular Options: Wild Coast Tented Lodge, Leopard Safaris.
+Details: Air-conditioned luxury canvas domes, private 4x4 game drives with naturalist guides, and outdoor fine dining.""",
+
+        "doc_41_luxury_clifftop_resorts_weligama.txt": """Category: Luxury Oceanfront Resorts
+Locations: Weligama & Tangalle
+Price Range: USD 400 - USD 850 per night
+Popular Options: Cape Weligama, Anantara Peace Haven Tangalle.
+Details: Clifftop ocean views, private plunge pools, dedicated wellness spas, and private cove beaches.""",
+
+        "doc_42_luxury_wellness_santani.txt": """Category: Luxury Mountain Wellness Retreat
+Location: Santani Wellness Resort (Kandy)
+Price Range: USD 350 - USD 700 per night
+Details: Minimalist eco-villas overlooking the Knuckles Range. Focuses on Ayurvedic detox, yoga, custom wellness cuisine, and hydrotherapy.""",
+
+        "doc_43_luxury_heritance_kandalama.txt": """Category: Iconic Architectural Eco-Hotel
+Location: Heritance Kandalama (Dambulla)
+Price Range: LKR 55,000 - LKR 95,000 per night
+Details: Designed by architect Geoffrey Bawa. Built into a cliff face overlooking Kandalama Lake. Features infinity pools and lake eco-tours.""",
+
+        "doc_44_colombo_luxury_five_star.txt": """Category: City Luxury Hotels
+Location: Colombo Coastal Promenade
+Price Range: LKR 45,000 - LKR 85,000 per night
+Popular Options: Shangri-La Colombo, Cinnamon Life, Kingsbury.
+Details: High-rise luxury, rooftop bars, international buffets, casino access, and adjacent shopping malls.""",
+
+        "doc_45_boutique_villas_ella_98acres.txt": """Category: Hill Country Eco Resort
+Location: 98 Acres Resort & Spa (Ella)
+Price Range: USD 250 - USD 450 per night
+Details: Standalone chalets on a tea estate overlooking Ella Gap. Located next to Little Adam's Peak and Flying Ravana Zipline.""",
+
+        "doc_46_flying_ravana_zipline_ella.txt": """Activity: Flying Ravana Mega Zipline
+Location: Mini Adam's Peak, Ella
+Rates: USD 30 - USD 45 per person
+Details: Dual-wire zipline over half a kilometer long, reaching speeds up to 80 km/h over tea estates. Certified by European Rope Course Association.""",
+
+        "doc_47_kitulgala_whitewater_rafting.txt": """Activity: Kitulgala White Water Rafting & Canyoning
+Location: Kelani River, Kitulgala
+Package Cost: USD 35 - USD 65 per person (approx LKR 10,000 - 18,000)
+Details: Covers 5 km of Grade 2 & 3 rapids, waterfall abseiling, cliff jumping, safety gear, and local lunch.""",
+
+        "doc_48_hiking_adam_peak.txt": """Activity: Adam's Peak (Sri Pada) Night Hike
+Location: Nallathanniya (Dalhousie)
+Cost: Free entry
+Details: 5,200 stone steps climb starting at 2:00 AM to reach the summit for sunrise. Season runs from December to May.""",
+
+        "doc_49_hiking_knuckles_range.txt": """Activity: Knuckles Mountain Range Trekking & Camping
+Location: Matale / Kandy District
+Guided Day Hike Cost: USD 40 - USD 70 per person (Includes mandatory local guide permit & packed lunch).
+2-Day Camping Package: USD 150 - USD 250 (Includes tents, campfire dinner, and mountain guides).""",
+
+        "doc_50_hot_air_ballooning_dambulla.txt": """Activity: Hot Air Balloon Safari
+Location: Dambulla / Kandalama
+Cost: USD 220 - USD 260 per adult
+Details: 1-hour flight over Sigiriya Rock, lakes, and jungle canopy. Season runs from November to April. Includes champagne breakfast upon landing.""",
+
+        "doc_51_scuba_diving_snorkeling.txt": """Activity: Scuba Diving & Snorkeling
+Locations: Hikkaduwa, Trincomalee (Nilaveli), Pigeon Island
+Beginner Scuba Dive: USD 70 - USD 90.
+Pigeon Island Snorkeling Tour: LKR 9,000 - LKR 12,000 including boat transfer and marine national park permit.""",
+
+        "doc_52_surfing_packages.txt": """Activity: Surf Lessons & Board Rentals
+Locations: Weligama Bay (Nov-April) & Arugam Bay (May-Oct)
+1-Hour Beginner Lesson: LKR 3,500 - LKR 5,000 (Includes instructor and board).
+5-Day Surf Camp Package: USD 250 - USD 400 (Includes accommodation and daily coaching).""",
+
+        "doc_53_hiking_ella_rock.txt": """Activity: Hiking Little Adam's Peak & Ella Rock
+Location: Ella
+Little Adam's Peak: Free entry, easy 1.5-hour round-trip hike.
+Ella Rock Guided Hike: LKR 3,000 - LKR 5,000 for a local guide (recommended due to unmapped tea estate paths).""",
+
+        "doc_54_sinharaja_rainforest_trek.txt": """Activity: Deep Jungle Trek & Bird Watching
+Location: Sinharaja Rainforest Reserve
+Guided Package Fee: LKR 6,000 - LKR 10,000 (Includes mandatory Forest Department ranger guide and leech socks rental).""",
+
+        "doc_55_cooking_class_tours.txt": """Activity: Traditional Sri Lankan Culinary Class
+Locations: Kandy, Ella, Galle Fort
+Price per Person: LKR 4,000 - LKR 8,000
+Includes: Local vegetable market tour, clay-pot cooking of 5 local curries over a coconut-wood fire, and a buffet meal.""",
+
+        "doc_56_tourist_police_hotlines.txt": """Facility: Tourist Police Division Headquarters & Regional Units
+Tourist Police Hotline: 1912 (24/7 Toll-Free)
+Police Emergency: 119 / 118
+Regional Offices: Colombo (+94 11 242 1052), Kandy (+94 81 222 2222), Galle/Hikkaduwa (+94 91 227 5545), Sigiriya (+94 66 493 0327).
+Role: Assisting tourists with theft reports, passport losses, scam complaints, and safety disputes.""",
+
+        "doc_57_national_ambulance_suwa_seriya.txt": """Service: 1990 Suwa Seriya Free National Ambulance
+Hotline: 1990 (Toll-Free 24/7)
+Coverage: Available island-wide across all 25 districts.
+Details: Equipped with trained paramedics and life-support technology for traffic accidents, medical emergencies, and mountain rescues.""",
+
+        "doc_58_disaster_management_weather.txt": """Facility: Disaster Management Centre & Department of Meteorology
+Disaster Call Centre Hotline: 117
+Emergency DMC Landline: +94 11 213 6222
+Use Case: Essential for landslide alerts, flood warnings, or weather updates before embarking on high-altitude hikes.""",
+
+        "doc_59_national_hospital_colombo.txt": """Facility: National Hospital of Sri Lanka (Colombo)
+Type: Public Tertiary General Hospital & National Trauma Center
+Emergency Hotline: 1959 | Landline: +94 11 269 1111
+Details: 24/7 emergency accident service and intensive care units.""",
+
+        "doc_60_kandy_galle_hospitals.txt": """Facility: Major Regional Teaching Hospitals
+National Hospital Kandy: +94 81 222 2261 (Serves Kandy, Sigiriya, Dambulla, and Knuckles Range).
+Karapitiya Teaching Hospital Galle: +94 91 223 2261 (Serves Hikkaduwa, Galle, Mirissa, and Southern Coast).""",
+
+        "doc_61_nuwara_eliya_badulla_hospitals.txt": """Facility: Hill Country District Hospitals
+Nuwara Eliya District General Hospital: +94 52 222 2261
+Badulla Provincial General Hospital (Near Ella): +94 55 222 2261
+Details: Medical care for hiking injuries, altitude issues, or leech bite infections near Ella and Nuwara Eliya.""",
+
+        "doc_62_private_hospitals.txt": """Facility: Private Hospital Networks (Lanka Hospitals, Asiri Health, Nawaloka)
+Lanka Hospitals Colombo: +94 11 553 0000 | Emergency: 1566
+Asiri Central Hospital Colombo: +94 11 452 4400
+Asiri Hospital Kandy: +94 81 452 8800
+Details: Multi-specialty care accepting international travel insurance policies.""",
+
+        "doc_63_pickme_uber_coverage.txt": """App Availability: PickMe & Uber App Coverage
+Active Coverage Zones: Colombo Metro, Negombo, Kandy City, Galle, Matara, and Kurunegala.
+Supported Classes: Metered Tuk-Tuks, Flex Cars, Sedans, and Vans.
+Note: Limited or unavailable in remote areas (Ella, Sigiriya, Arugam Bay, Yala), where local tuk-tuks or private drivers are required.""",
+
+        "doc_64_expressway_terminals.txt": """Facility: Highway Express Bus Terminals
+Makumbura Multimodal Transport Center (Kottawa): Terminal for luxury expressway buses to Galle, Matara, Hambantota, and Katunayake Airport.
+Kandy Central Bus Stand: Hub for long-distance buses to Nuwara Eliya, Dambulla, Trincomalee, and Jaffna.""",
+
+        "doc_65_driving_permits_aac.txt": """Topic: Self-Drive Rentals & AAC Driving Permits
+Requirement: An International Driving Permit (IDP) must be endorsed by the Automobile Association of Ceylon (AAC) in Colombo (Cost: ~USD 25 / LKR 7,500).
+AAC Colombo Office: No. 40, Sir Mohamed Macan Markar Mawatha, Colombo 03 | Tel: +94 11 242 1528.""",
+
+        "doc_66_hela_bojun_outlets.txt": """Concept: Hela Bojun Hala (Ministry of Agriculture Enterprise)
+Mission: Empowers female agricultural entrepreneurs while serving traditional, preservative-free Sri Lankan vegetarian food.
+Price Range: LKR 50 - LKR 300 per item.
+Key Locations: Peradeniya (Gannoruwa Rd), Kandy Town, Dambulla Main Rd, Anuradhapura, Battaramulla (Diyatha Uyana), Matara Beach Rd.
+Popular Menu: Finger millet (Kurakkan) pittu, polos cutlets, herbal porridge (Konda Karawala), mung bean patties, fresh fruit juices.""",
+
+        "doc_67_botanical_gardens.txt": """Attractions: Royal Botanical Gardens Peradeniya & Hakgala Gardens
+Peradeniya (Kandy): Fee LKR 3,000 foreign adult. Features Orchid House, Giant Bamboo lawn, and Royal Palm Avenue.
+Hakgala (Nuwara Eliya): Fee LKR 3,540 foreign adult. High-altitude rose gardens and alpine fernery.
+Henarathgoda (Gampaha): Fee LKR 3,540 foreign adult. Home to Sri Lanka's first planted rubber tree.""",
+
+        "doc_68_pinnawala_and_udawalawe_elephants.txt": """Attractions: Elephant Sanctuaries
+Pinnawala Elephant Orphanage (Kegalle): USD 15 / LKR 4,500. Milk feeding at 9:15 AM & 1:15 PM; river bathing at 10:00 AM & 2:00 PM.
+Udawalawe Elephant Transit Home (DWC): LKR 1,500 entrance. Ethical rehabilitation of wild orphan calves. Public feeding viewing at 9:00 AM, 12:00 PM, 3:00 PM, 6:00 PM.""",
+
+        "doc_69_forest_dept_and_dwc_permits.txt": """Authority: Forest Conservation Dept & Dept of Wildlife Conservation (DWC)
+Forest Dept Tel: +94 11 286 6631 | DWC Tel: +94 11 288 8585
+Permit Rules: Camping or off-trail trekking in Forest Reserves (Knuckles, Sinharaja) REQUIRES prior written approval from the Forest Dept. DWC circuit bungalows and campsites (Yala, Wilpattu, Horton Plains) must be reserved via `dwc.lankagate.gov.lk`.""",
+
+        "doc_70_sltda_and_drone_permits.txt": """Authority: Sri Lanka Tourism Development Authority (SLTDA) & Civil Aviation Authority (CAASL)
+SLTDA Hotline: 1912 (24/7 Tourist Assistance)
+CAASL Tel: +94 11 235 8800
+Drone Rule: Flying recreational or commercial drones REQUIRES prior online approval from CAASL, Ministry of Defence security clearance, and Archaeology Dept approval for heritage sites.""",
+
+        "doc_71_tourist_police_colombo_headquarters.txt": """Facility: Tourist Police Division Headquarters & Hotlines
+Location: No. 80, Galle Road, Colombo 03
+Landline: +94 11 242 1052 | Tourist Police Hotline: 1912 (24/7 Service)
+Police Emergency Hotline: 119 / 118
+Role: Handles tourist complaints, theft reports, lost passports, and scam investigations across Sri Lanka.""",
+
+        "doc_72_tourist_police_kandy_nuwaraeliya.txt": """Facility: Hill Country Tourist Police Units
+Kandy Tourist Police Unit: Kandy Police Station premises | Tel: +94 81 222 2222
+Nuwara Eliya Tourist Police Unit: Central Bus Stand Premises | Tel: +94 52 222 2222
+Role: Assists travelers in Kandy, Ella, and Nuwara Eliya with local safety, guide verification, and mountain emergency response.""",
+
+        "doc_73_tourist_police_galle_hikkaduwa.txt": """Facility: Southern Coast Tourist Police Units
+Galle / Hikkaduwa Unit: Narigama, Hikkaduwa | Tel: +94 91 227 5545
+Bentota / Moragalla Unit: Galle Road, Beruwala | Tel: +94 34 227 6049
+Role: Coastline safety monitoring, beach harassment prevention, surf safety guidance, and water activity disputes.""",
+
+        "doc_74_tourist_police_sigiriya_dambulla.txt": """Facility: Cultural Triangle Tourist Police Units
+Sigiriya Unit: Near Rock Entrance Junction | Tel: +94 66 493 0327
+Dambulla Unit: New Bus Stand Premises | Tel: +94 66 567 7966
+Anuradhapura Unit: Lion's Post Junction | Tel: +94 11 313 3686
+Role: Protection of heritage sites, ticket scam prevention, and crowd control.""",
+
+        "doc_75_tourist_police_arugambay_negombo.txt": """Facility: East Coast & Airport Region Tourist Police
+Arugam Bay / Pottuvil Unit: Panama Road, Arugam Bay | Tel: +94 11 308 1044
+Negombo / Eththukala Unit: Poruthota Road, Eththukala | Tel: +94 31 227 5555
+Airport Tourist Police (BIA): Katunayake | Tel: +94 11 225 1475""",
+
+        "doc_76_disaster_management_117.txt": """Facility: Disaster Management Centre & Department of Meteorology
+Disaster Call Centre: 117 (Disaster alerts, floods, landslides, extreme weather warnings)
+Emergency DMC Landline: +94 11 213 6222
+Department of Meteorology Weather Inquiries: +94 11 268 6686
+Use Case: Essential for verifying mountain trail safety or monsoon landslide warnings before high-altitude hikes.""",
+
+        "doc_77_national_hospital_colombo.txt": """Facility: National Hospital of Sri Lanka (Colombo)
+Type: Public Tertiary General Hospital & National Trauma Center
+Emergency Hotline: 1959 | General Landline: +94 11 269 1111
+Accident Service: Open 24/7 with specialized trauma teams and intensive care units.""",
+
+        "doc_78_kandy_teaching_hospital.txt": """Facility: National Hospital Kandy (Teaching Hospital)
+Type: Major Public Hospital in Central Province
+Landline: +94 81 222 2261
+Details: Primary trauma center for emergencies occurring in Kandy, Sigiriya, Dambulla, Matale, and Knuckles Mountain Range.""",
+
+        "doc_79_karapitiya_galle_hospital.txt": """Facility: Karapitiya Teaching Hospital (Galle)
+Type: Main Government Tertiary Hospital in Southern Province
+Landline: +94 91 223 2261
+Details: Serves emergency cases across Hikkaduwa, Galle, Unawatuna, Mirissa, and Matara coastal zones.""",
+
+        "doc_80_nuwaraeliya_badulla_hospitals.txt": """Facility: Hill Country District General Hospitals
+Nuwara Eliya District General Hospital: +94 52 222 2261
+Badulla Provincial General Hospital (Near Ella): +94 55 222 2261
+Details: Essential medical reference points for hiking injuries, altitude issues, or leech bite infections near Ella and Nuwara Eliya.""",
+
+        "doc_81_private_hospitals_lanka_asiri.txt": """Facility: Private Hospital Networks (Lanka Hospitals, Asiri Health, Nawaloka)
+Lanka Hospitals Colombo: +94 11 553 0000 | Emergency: 1566
+Asiri Central Hospital Colombo: +94 11 452 4400
+Asiri Hospital Kandy: +94 81 452 8800
+Details: Multi-specialty private care accepting international travel insurance policies.""",
+
+        "doc_82_pickme_intercity_fares.txt": """Service: PickMe Intercity Outstation Rides
+Sample Fares: Colombo Airport to Kandy (~LKR 12,000 - 16,000); Colombo to Galle Fort via Highway (~LKR 10,000 - 14,000).
+Advantage: Upfront fixed digital pricing avoiding street driver fare negotiations.""",
+
+        "doc_83_expressway_bus_terminals.txt": """Facility: Major Highway Bus Terminals
+Makumbura Multimodal Transport Center (Kottawa): Primary terminal for luxury expressway buses to Galle, Matara, Hambantota, and Katunayake Airport.
+Kandy Central Bus Stand: Hub for buses to Nuwara Eliya, Dambulla, Trincomalee, and Jaffna.""",
+
+        "doc_84_aac_driving_permits_colombo.txt": """Topic: Self-Drive Rentals & AAC Temporary Driving Permits
+Rule: An International Driving Permit (IDP) alone is NOT sufficient in Sri Lanka.
+Permit Requirement: Foreign drivers must get their IDP endorsed by the Automobile Association of Ceylon (AAC) in Colombo (Cost: ~USD 25 / LKR 7,500).
+AAC Colombo Office: No. 40, Sir Mohamed Macan Markar Mawatha, Colombo 03 | Tel: +94 11 242 1528.""",
+
+        "doc_85_hela_bojun_kandy_peradeniya.txt": """Locations: Hela Bojun Outlets in Kandy & Peradeniya
+1. Peradeniya Outlet: Near Royal Botanical Gardens Entrance, Gannoruwa Road.
+2. Kandy Town Outlet: Near Kandy Lake / Market Complex.
+Hours: 6:30 AM to 6:30 PM daily.
+Price Range: LKR 50 - LKR 300 per food item.""",
+
+        "doc_86_hela_bojun_dambulla_anuradhapura.txt": """Locations: Hela Bojun Outlets in Dambulla, Anuradhapura, Matara
+1. Dambulla Outlet: Opposite Agriculture Complex, Main Road Dambulla.
+2. Anuradhapura Outlet: Near New Town Railway Station.
+3. Matara Outlet: Beach Road, Matara.
+Hours: 6:30 AM to 7:00 PM daily.""",
+
+        "doc_87_hela_bojun_battaramulla_colombo.txt": """Locations: Hela Bojun Outlets in Western Province
+Battaramulla Outlet: Near Diyatha Uyana / Ministry of Agriculture Complex, Battaramulla.
+Details: High-footfall outlet offering traditional herbal drinks (Ranawara, Iramusu, Beli Flower) and steamed millet rotis.""",
+
+        "doc_88_henarathgoda_gampaha_gardens.txt": """Attraction: Henarathgoda Botanical Garden
+Location: Gampaha (30 km from Colombo)
+Entrance Fee (Foreign Adult): LKR 3,540
+Highlights: Site where the first rubber tree in the British Empire was planted in 1876. Features ancient tropical trees and boat rides on the lake.""",
+
+        "doc_89_seetawaka_wet_zone_gardens.txt": """Attraction: Seetawaka Wet Zone Botanical Garden
+Location: Avissawella (60 km from Colombo)
+Entrance Fee (Foreign Adult): LKR 3,540
+Highlights: Sri Lanka's newest botanical garden dedicated to wet-zone flora conservation. Features golf-cart tours and paddle boating.""",
+
+        "doc_90_pinnawala_elephant_orphanage_official.txt": """Attraction: Pinnawala Elephant Orphanage (Department of National Zoological Gardens)
+Location: Rambukkana (Kegalle District)
+Entrance Fee (Foreign Adult): USD 15 / LKR 4,500
+Daily Schedule: Milk feeding at 9:15 AM & 1:15 PM; River bathing procession at 10:00 AM & 2:00 PM at Ma Oya River.""",
+
+        "doc_91_millennium_elephant_foundation.txt": """Attraction: Millennium Elephant Foundation (MEF)
+Location: Karandupona, Rambukkana (Adjacent to Pinnawala)
+Entry / Walk Package: LKR 6,000 - LKR 12,000 per person
+Ethical Focus: Non-riding sanctuary. Offers elephant walk experience, elephant washing in the river, and medical care volunteering.""",
+
+        "doc_92_ridiyagama_safari_park.txt": """Attraction: Ridiyagama Open Safari Park
+Location: Ambalantota (Hambantota District)
+Entrance Fee (Foreign Adult): USD 20 / LKR 6,000 (Includes air-conditioned safari bus tour)
+Highlights: 500-acre open safari drive featuring African lions, Bengal tigers, herbivores, and Asian elephants.""",
+
+        "doc_93_forest_department_camping_permits.txt": """Authority: Department of Forest Conservation Sri Lanka
+Headquarters: Sampathpaya, Battaramulla, Colombo | Tel: +94 11 286 6631
+Permit Requirement: Camping in Forest Reserves (e.g., Knuckles, Sinharaja, Kanneliya) REQUIRES prior written approval and permit issuance from the Forest Dept.
+Prohibited Actions: Open campfires without designated fire rings, single-use plastic bottles, and unguided off-trail trekking.""",
+
+        "doc_94_department_of_wildlife_conservation_dwc.txt": """Authority: Department of Wildlife Conservation (DWC)
+Headquarters: No. 811A, Jayanthipura Road, Battaramulla | Tel: +94 11 288 8585
+eService Portal: dwc.lankagate.gov.lk
+Permit Service: Mandatory online or head-office booking for DWC Wildlife Circuit Bungalows and designated campsite pitches inside Yala, Wilpattu, Horton Plains, and Udawalawe.""",
+
+        "doc_95_horton_plains_world_end_permits.txt": """Attraction: Horton Plains National Park & World's End
+Managing Body: Department of Wildlife Conservation
+Entrance Fee (Foreign Adult): USD 25 + Vehicle Permit + VAT (Approx LKR 9,500 total per person)
+Opening Hours: 6:00 AM to 4:00 PM (Best to enter before 9:00 AM to avoid mist obscuring World's End cliff).
+Strict Prohibition: Plastic bags, single-use water wrappers, and disposable plastic bottles are confiscated at the entrance gate.""",
+
+        "doc_96_adam_peak_sanctuary_regulations.txt": """Attraction: Peak Wilderness Sanctuary (Adam's Peak / Sri Pada)
+Managing Body: Department of Wildlife Conservation & Divisional Secretariat Nallathanniya
+Permit Rule: Public hiking via Hatton/Nallathanniya trail is free during peak season (Dec to May). Off-season trekking (June to Nov) requires informing the Nallathanniya Police Station before ascending.""",
+
+        "doc_97_archaeology_department_site_permits.txt": """Authority: Department of Archaeology Sri Lanka
+Headquarters: Sir Marcus Fernando Mawatha, Colombo 07 | Tel: +94 11 269 2840
+Permit Rule: Special commercial photography, filming, or scientific research at non-ticketed archaeological ruins (e.g., Ritigala, Pidurangala, Nalanda Gedige) requires advance written approval.""",
+
+        "doc_98_srilanka_tourism_development_authority.txt": """Authority: Sri Lanka Tourism Development Authority (SLTDA)
+Head Office: No. 80, Galle Road, Colombo 03 | Tel: +94 11 242 6900
+Hotline: 1912 (24/7 Tourist Assistance)
+Role: Formal registration verification for hotels, tour drivers, travel agencies, and official tourist guides.""",
+
+        "doc_99_immigration_and_emigration_department.txt": """Authority: Department of Immigration and Emigration Sri Lanka
+Headquarters: Suhurupaya, Battaramulla, Sri Jayawardenepura Kotte | Tel: +94 11 210 1500
+Official ETA Portal: eta.gov.lk
+Services: 30-day ETA tourist visa extensions (up to 6 months), visa status queries, and passport loss documentation."""
     }
     
     for filename, content in docs.items():
