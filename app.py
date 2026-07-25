@@ -245,7 +245,7 @@ st.sidebar.markdown("""
 
 st.sidebar.header("📋 Configure Parameters")
 
-days = st.sidebar.slider("Trip Duration (Days)", min_value=1, max_value=7, value=3)
+days = st.sidebar.slider("Trip Duration (Days)", min_value=1, max_value=14, value=3)
 
 budget = st.sidebar.number_input("Total Budget (LKR)", min_value=10000, max_value=2000000, value=120000, step=5000, help="Specify total budget including accommodation, transportation, and entry tickets.")
 
