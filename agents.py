@@ -1,5 +1,4 @@
 import os
-os.environ["HF_HUB_OFFLINE"] = "1"
 import json
 # pyrefly: ignore [missing-import]
 import streamlit as st
@@ -48,22 +47,24 @@ def get_reasoning_architect_llm():
         temperature=0.4
     )
 
-# 3. Vector Database Connection
-# Check if chroma_db exists first
-if os.path.exists("./chroma_db"):
+# 3. Vector Database Connection (Auto-builds if missing on Streamlit Cloud)
+@st.cache_resource
+def get_vector_db():
+    if not os.path.exists("./chroma_db") or not os.listdir("./chroma_db"):
+        from rag_builder import build_vector_database
+        build_vector_database()
+        
     def _init_embeddings():
         for attempt in range(4):
             try:
                 return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-            except Exception as e:
+            except Exception:
                 import time
                 time.sleep(1.5)
         return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     
     embeddings = _init_embeddings()
-    vector_db = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
-else:
-    vector_db = None
+    return Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
 
 def agent_1_logistics_specialist(user_interests, user_days, accommodation_tier="Mid-Range"):
     """
@@ -71,8 +72,9 @@ def agent_1_logistics_specialist(user_interests, user_days, accommodation_tier="
     Queries the vector DB for attractions, accommodation, adventure packages, emergency hotlines, transport, and dining.
     Structures a comprehensive, highly detailed logistics JSON payload for Agent 2.
     """
+    vector_db = get_vector_db()
     if vector_db is None:
-        return json.dumps({"error": "Vector database not found. Please run rag_builder.py first."}), []
+        return json.dumps({"error": "Vector database initialization failed."}), []
         
     # Construct targeted search query combining interests, accommodation tier, and essential rules (Router Pattern)
     query = f"Attractions, entrance ticket fees, {accommodation_tier} accommodation, transport apps, expressway bus terminals, emergency tourist police hotlines, hospitals, Hela Bojun dining outlets, permits, and temple dress codes for {user_interests} in {user_days} days"
