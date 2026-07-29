@@ -124,14 +124,22 @@ def agent_1_logistics_specialist(user_interests, user_days, accommodation_tier="
     Do not add any conversational text before or after the JSON.
     """
     
-    # Primary: Fast Groq Llama 3.1 -> Fallback: OpenRouter GPT-4o-mini
-    try:
-        fast_llm = ChatGroq(model_name="llama-3.1-8b-instant", groq_api_key=groq_key, temperature=0.2, request_timeout=15.0)
-        response = fast_llm.invoke(prompt)
-    except Exception as e:
-        print(f"Groq API connection timeout, switching to OpenRouter fallback: {e}")
-        fast_llm = ChatOpenAI(model_name="openai/gpt-4o-mini", openai_api_base="https://openrouter.ai/api/v1", openai_api_key=openrouter_key, temperature=0.2)
-        response = fast_llm.invoke(prompt)
+    response = None
+    for attempt in range(3):
+        try:
+            fast_llm = ChatGroq(model_name="llama-3.1-8b-instant", groq_api_key=groq_key, temperature=0.2, request_timeout=25.0)
+            response = fast_llm.invoke(prompt)
+            break
+        except Exception:
+            try:
+                fast_llm = ChatOpenAI(model_name="openai/gpt-4o-mini", openai_api_base="https://openrouter.ai/api/v1", openai_api_key=openrouter_key, temperature=0.2, request_timeout=30.0)
+                response = fast_llm.invoke(prompt)
+                break
+            except Exception as e:
+                if attempt == 2:
+                    raise e
+                import time
+                time.sleep(2)
             
     # Extract JSON content if the model outputs code blocks
     content = response.content.strip()
