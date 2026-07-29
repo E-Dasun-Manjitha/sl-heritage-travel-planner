@@ -315,127 +315,141 @@ if st.sidebar.button("🚀 Generate Itinerary"):
                 
             st.success("✨ Your Sri Lankan travel plan has been compiled!")
             
-            # Extract DataFrame of places in chronological travel order
-            map_df = extract_locations_dataframe(final_itinerary, extracted_facts)
-            
-            # Setup Tabs for display
-            tab1, tab2, tab3 = st.tabs(["🗺️ Day-by-Day Itinerary", "📍 Interactive Route Map", "🔍 RAG Verification & Source Chunks"])
-            
-            with tab1:
-                st.markdown(final_itinerary)
-                
-            with tab2:
-                st.subheader("📍 Sri Lanka Tourist Route & Destination Map")
-                st.markdown(f"Topographic travel route map highlighting **{len(map_df)} destination stops** and travel directions across Sri Lanka:")
-                
-                # Compute directional arrows DataFrame
-                arrows_df = compute_route_arrows(map_df)
-                
-                # Render PyDeck Interactive Map with CartoDB Voyager Topographic Style (Focused tightly on Sri Lanka)
-                center_lat = float(map_df["lat"].mean()) if not map_df.empty else 7.75
-                center_lon = float(map_df["lon"].mean()) if not map_df.empty else 80.70
-                
-                view_state = pdk.ViewState(
-                    latitude=center_lat,
-                    longitude=center_lon,
-                    zoom=7.9,
-                    pitch=0
-                )
-                
-                # Red path line connecting destination stops
-                path_data = [{"path": map_df[["lon", "lat"]].values.tolist()}]
-                path_layer = pdk.Layer(
-                    "PathLayer",
-                    path_data,
-                    get_path="path",
-                    get_color="[220, 38, 38, 240]",
-                    width_scale=20,
-                    width_min_pixels=3,
-                    pickable=False
-                )
-                
-                # Directional red arrow markers along the route path
-                arrows_layer = pdk.Layer(
-                    "TextLayer",
-                    arrows_df,
-                    get_position=["lon", "lat"],
-                    get_text="symbol",
-                    get_angle="angle",
-                    get_size=18,
-                    get_color="[220, 38, 38, 255]",
-                    get_text_anchor="'middle'",
-                    get_alignment_baseline="'center'"
-                )
-                
-                # Red circular destination pins with dark red borders (matching StepMap style)
-                scatter_layer = pdk.Layer(
-                    "ScatterplotLayer",
-                    map_df,
-                    get_position=["lon", "lat"],
-                    get_fill_color="[220, 38, 38, 255]",
-                    get_line_color="[153, 27, 27, 255]",
-                    line_width_min_pixels=2,
-                    get_radius=8500,
-                    pickable=True,
-                    auto_highlight=True
-                )
-                
-                # Clean place text labels next to each destination pin
-                text_layer = pdk.Layer(
-                    "TextLayer",
-                    map_df,
-                    get_position=["lon", "lat"],
-                    get_text="map_label",
-                    get_size=15,
-                    get_color="[15, 23, 42, 255]",
-                    get_background_color="[255, 255, 255, 220]",
-                    get_border_color="[220, 38, 38, 200]",
-                    get_border_width=1,
-                    padding=[3, 6],
-                    get_text_anchor="'left'",
-                    get_alignment_baseline="'center'"
-                )
-                
-                deck = pdk.Deck(
-                    layers=[path_layer, arrows_layer, scatter_layer, text_layer],
-                    initial_view_state=view_state,
-                    map_style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-                    tooltip={"text": "📍 Stop #{stop_number}: {name}\nCategory: {type}\n{details}"}
-                )
-                
-                st.pydeck_chart(deck)
-                
-                st.markdown("---")
-                st.markdown("### 📋 Suggested Destination Summary")
-                st.dataframe(
-                    map_df[["stop_number", "name", "type", "lat", "lon", "details"]],
-                    column_config={
-                        "stop_number": "Stop #",
-                        "name": "Destination Name",
-                        "type": "Category",
-                        "lat": "Latitude",
-                        "lon": "Longitude",
-                        "details": "Details & Fee Notes"
-                    },
-                    use_container_width=True
-                )
-                
-                # Google Maps Route Link
-                gmaps_coords = "/".join([f"{row['lat']},{row['lon']}" for _, row in map_df.iterrows()])
-                gmaps_url = f"https://www.google.com/maps/dir/{gmaps_coords}"
-                st.markdown(f"👉 [**🌐 Open Complete Travel Route in Google Maps**]({gmaps_url})")
-                
-            with tab3:
-                st.subheader("Retrieved Context Chunks (Ground Truth Sources)")
-                st.write(f"The vector database retrieved {len(retrieved_docs)} matching documents to ground the agents' knowledge base:")
-                for idx, doc in enumerate(retrieved_docs):
-                    source_name = doc.metadata.get('source', 'Unknown source')
-                    source_basename = os.path.basename(source_name)
-                    with st.expander(f"📄 Chunk {idx+1} — {source_basename}"):
-                        st.markdown(f"**Source File:** `{source_name}`")
-                        st.info(doc.page_content)
+            # Store results in session_state so they persist across tab switches
+            st.session_state["final_itinerary"] = final_itinerary
+            st.session_state["extracted_facts"] = extracted_facts
+            st.session_state["retrieved_docs_content"] = [
+                {"page_content": doc.page_content, "source": doc.metadata.get('source', 'Unknown source')}
+                for doc in retrieved_docs
+            ]
                         
         except Exception as e:
             st.error("An error occurred during generation.")
             st.exception(e)
+
+# 6. Display Results (persists across tab switches via session_state)
+if "final_itinerary" in st.session_state:
+    final_itinerary = st.session_state["final_itinerary"]
+    extracted_facts = st.session_state["extracted_facts"]
+    saved_docs = st.session_state["retrieved_docs_content"]
+    
+    # Extract DataFrame of places in chronological travel order
+    map_df = extract_locations_dataframe(final_itinerary, extracted_facts)
+    
+    # Setup Tabs for display
+    tab1, tab2, tab3 = st.tabs(["🗺️ Day-by-Day Itinerary", "📍 Interactive Route Map", "🔍 RAG Verification & Source Chunks"])
+    
+    with tab1:
+        st.markdown(final_itinerary)
+        
+    with tab2:
+        st.subheader("📍 Sri Lanka Tourist Route & Destination Map")
+        st.markdown(f"Topographic travel route map highlighting **{len(map_df)} destination stops** and travel directions across Sri Lanka:")
+        
+        # Compute directional arrows DataFrame
+        arrows_df = compute_route_arrows(map_df)
+        
+        # Render PyDeck Interactive Map with CartoDB Voyager Topographic Style (Focused tightly on Sri Lanka)
+        center_lat = float(map_df["lat"].mean()) if not map_df.empty else 7.75
+        center_lon = float(map_df["lon"].mean()) if not map_df.empty else 80.70
+        
+        view_state = pdk.ViewState(
+            latitude=center_lat,
+            longitude=center_lon,
+            zoom=7.9,
+            pitch=0
+        )
+        
+        # Red path line connecting destination stops
+        path_data = [{"path": map_df[["lon", "lat"]].values.tolist()}]
+        path_layer = pdk.Layer(
+            "PathLayer",
+            path_data,
+            get_path="path",
+            get_color="[220, 38, 38, 240]",
+            width_scale=20,
+            width_min_pixels=3,
+            pickable=False
+        )
+        
+        # Directional red arrow markers along the route path
+        arrows_layer = pdk.Layer(
+            "TextLayer",
+            arrows_df,
+            get_position=["lon", "lat"],
+            get_text="symbol",
+            get_angle="angle",
+            get_size=18,
+            get_color="[220, 38, 38, 255]",
+            get_text_anchor="'middle'",
+            get_alignment_baseline="'center'"
+        )
+        
+        # Red circular destination pins with dark red borders (matching StepMap style)
+        scatter_layer = pdk.Layer(
+            "ScatterplotLayer",
+            map_df,
+            get_position=["lon", "lat"],
+            get_fill_color="[220, 38, 38, 255]",
+            get_line_color="[153, 27, 27, 255]",
+            line_width_min_pixels=2,
+            get_radius=8500,
+            pickable=True,
+            auto_highlight=True
+        )
+        
+        # Clean place text labels next to each destination pin
+        text_layer = pdk.Layer(
+            "TextLayer",
+            map_df,
+            get_position=["lon", "lat"],
+            get_text="map_label",
+            get_size=15,
+            get_color="[15, 23, 42, 255]",
+            get_background_color="[255, 255, 255, 220]",
+            get_border_color="[220, 38, 38, 200]",
+            get_border_width=1,
+            padding=[3, 6],
+            get_text_anchor="'left'",
+            get_alignment_baseline="'center'"
+        )
+        
+        deck = pdk.Deck(
+            layers=[path_layer, arrows_layer, scatter_layer, text_layer],
+            initial_view_state=view_state,
+            map_style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+            tooltip={"text": "📍 Stop #{stop_number}: {name}\nCategory: {type}\n{details}"}
+        )
+        
+        st.pydeck_chart(deck)
+        
+        st.markdown("---")
+        st.markdown("### 📋 Suggested Destination Summary")
+        st.dataframe(
+            map_df[["stop_number", "name", "type", "lat", "lon", "details"]],
+            column_config={
+                "stop_number": "Stop #",
+                "name": "Destination Name",
+                "type": "Category",
+                "lat": "Latitude",
+                "lon": "Longitude",
+                "details": "Details & Fee Notes"
+            },
+            use_container_width=True
+        )
+        
+        # Google Maps Route Link
+        gmaps_coords = "/".join([f"{row['lat']},{row['lon']}" for _, row in map_df.iterrows()])
+        gmaps_url = f"https://www.google.com/maps/dir/{gmaps_coords}"
+        st.markdown(f"👉 [**🌐 Open Complete Travel Route in Google Maps**]({gmaps_url})")
+        
+    with tab3:
+        st.subheader("Retrieved Context Chunks (Ground Truth Sources)")
+        st.write(f"The vector database retrieved {len(saved_docs)} matching documents to ground the agents' knowledge base:")
+        for idx, doc_data in enumerate(saved_docs):
+            source_name = doc_data['source']
+            source_basename = os.path.basename(source_name)
+            with st.expander(f"📄 Chunk {idx+1} — {source_basename}"):
+                st.markdown(f"**Source File:** `{source_name}`")
+                st.info(doc_data['page_content'])
 
