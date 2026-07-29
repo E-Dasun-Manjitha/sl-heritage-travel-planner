@@ -2,7 +2,7 @@
 
 An intelligent, multi-agent, RAG-driven travel planner application that designs custom daily travel itineraries across Sri Lanka based on user budget, trip duration, and preferences.
 
-🌐 **Live Streamlit App:** [Deploy on Streamlit Community Cloud](https://share.streamlit.io/)
+🌐 **Live Streamlit App:** [View Live Streamlit App](https://sl-heritage-travel-planner-ds9abxmjwyckjsapeeaog.streamlit.app)
 
 ---
 
