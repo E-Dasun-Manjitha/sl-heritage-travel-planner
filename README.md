@@ -43,19 +43,30 @@ sequenceDiagram
 
 ## Agentic Design Patterns
 
-1. **Tool-Use Pattern:** Agent 1 queries the local Chroma vector database to fetch factual ticket fees, local transport rates, and cultural rules from the knowledge base.
-2. **Router Pattern:** Agent 1 parses selected user interest tags to construct specialized search vectors.
-3. **Reflection Pattern:** Agent 2 checks its drafted schedule to ensure total entrance fees and transport fit within the user's budget ceiling. If the budget is exceeded, it executes a self-correction loop to replace high-cost activities with affordable alternatives.
-4. **Orchestrator-Worker / Task Decomposition Pattern:** Agent 1 performs factual extraction while Agent 2 performs multi-day itinerary synthesis and budget verification.
+1. **Tool-Use Pattern:**
+   - **Where it lives:** `agents.py` inside `agent_1_logistics_specialist()`
+   - **Implementation:** Queries the local Chroma vector database (`vector_db.similarity_search()`) to fetch factual entrance ticket fees, local transport rates, and rules from the domain knowledge base.
+
+2. **Router Pattern:**
+   - **Where it lives:** `agents.py` inside `agent_1_logistics_specialist()`
+   - **Implementation:** Parses selected user interest tags, accommodation tier, and trip duration to dynamically construct specialized search vector queries.
+
+3. **Reflection / Self-Critique Pattern:**
+   - **Where it lives:** `agents.py` inside `agent_2_itinerary_architect()`
+   - **Implementation:** Agent 2 calculates total entrance fees, transport, dining, and accommodation costs against the user's budget limit. If exceeded, it executes an automated self-correction loop to swap out expensive items for affordable alternatives before outputting the final plan.
+
+4. **Orchestrator-Worker / Task Decomposition Pattern:**
+   - **Where it lives:** `agents.py` (`agent_1_logistics_specialist` & `agent_2_itinerary_architect`)
+   - **Implementation:** Task is split into two specialized stages: Agent 1 performs domain fact extraction and outputs a structured JSON payload, which Worker/Architect Agent 2 consumes to synthesize the multi-day schedule.
 
 ---
 
 ## Model Selection Strategy
 
-| Sub-task | Selected Model & Provider | Justification |
-| :--- | :--- | :--- |
-| **Intent Routing & Context Extraction** | `llama-3.1-8b-instant` (via Groq) | Low latency, zero cost, and high performance for structured JSON extraction. |
-| **Itinerary Synthesis & Budget Reflection** | `gpt-4o-mini` (via OpenRouter) | Superior reasoning quality for complex schedule generation and strict budget constraint verification. |
+| Sub-task | Model & Provider | Latency | Cost (per 1M Tokens) | Context Window | Reasoning Quality | Justification |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Intent Routing & Context Extraction** | `llama-3.1-8b-instant` (Groq) | ~200-400 ms | $0.05 / $0.08 | 128k tokens | Moderate (High for JSON) | Extremely low latency and near-zero cost make it optimal for fast document chunk parsing and structured JSON extraction. |
+| **Itinerary Synthesis & Budget Reflection** | `gpt-4o-mini` (OpenRouter) | ~1.5-2.5 sec | $0.15 / $0.60 | 128k tokens | High | Superior logical reasoning and instruction-following required for multi-day schedule assembly and mathematical budget validation. |
 
 ---
 
